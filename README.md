@@ -1,6 +1,10 @@
 # DumbShot
 > An elegant, painless one-click screenshot utility for Wayland (grim + slurp)
 
+## Preview
+
+![Preview](https://raw.githubusercontent.com/Faynot/dumbshot/main/preview.png)
+
 ## Installing
 
 ### AUR (Arch User Repository)
@@ -21,6 +25,7 @@ Install dependencies:
 - libnotify
 - slurp
 - wl-clipboard
+- make (make) *
 - cargo (make) *
 - rust (make) *
 - wofi (optional: Recommended GUI for action selection ) *
@@ -34,12 +39,20 @@ Run these commands:
 ```shell
 git clone https://github.com/Faynot/dumbshot
 cd dumbshot
-make
+make install
 ```
 
 ## Using
 
 Run `dumbshot` command in a terminal.
+
+### Bindings
+
+Hyprland: add this line in `~/.config/hypr/hyprland.conf` to bind `dumbshot`:
+
+```
+bind = , Print, exec, dumbshot
+```
 
 ## Links
 
