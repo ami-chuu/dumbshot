@@ -48,7 +48,9 @@ Run `dumbshot` command in a terminal.
 
 ### Bindings
 
-Hyprland: add this line in `~/.config/hypr/hyprland.conf` to bind `dumbshot`:
+#### Hyprland
+
+add this line in `~/.config/hypr/hyprland.conf` to bind `dumbshot`:
 
 ```
 bind = , Print, exec, dumbshot
