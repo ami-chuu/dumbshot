@@ -1,0 +1,3 @@
+mode=dmenu
+dmenu-case-sensitive=false
+dmenu-parse_action=false

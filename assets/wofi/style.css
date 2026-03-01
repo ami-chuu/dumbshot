@@ -1,0 +1,61 @@
+@define-color bg #060505;
+@define-color fg #fff;
+@define-color sel #1C1616;
+
+window {
+  margin: 6px;
+  border-radius: 30px;
+  background-color: transparent;
+  font-family: "FiraCode Nerd Font";
+  font-size: 18px;
+  font-weight: 600;
+  background-color: @bg;
+  color: @fg;
+}
+
+#input {
+  all: unset;
+  color: transparent;
+  background: transparent;
+  border: none;
+  font-size: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+#input > * {
+  all: unset;
+}
+
+#outer-box {
+  padding: 0px 14px 14px 14px;
+  background-color: @bg;
+  border-radius: 40px;
+}
+
+
+#entry { 
+  border-radius: 20px; 
+  padding: 1rem;
+}
+
+#entry:selected { 
+  background-color: @sel; 
+  color: @fg; 
+  border: none;
+  outline: none;
+}
+
+#text {
+  margin: 0px;
+}
+
+#img {
+  margin-right: 1rem;
+}
+
+#scroll scrollbar {
+    min-width: 0;
+    width: 0;
+    opacity: 0;
+}
