@@ -8,7 +8,6 @@ use std::thread;
 use std::time::Duration;
 use which::which;
 
-// Вшиваем ассеты в бинарник
 const ICON_AREA: &[u8] = include_bytes!("../assets/icons/Area.svg");
 const ICON_MONITOR: &[u8] = include_bytes!("../assets/icons/Monitor.svg");
 const ICON_COPY: &[u8] = include_bytes!("../assets/icons/Copy.svg");
@@ -23,11 +22,9 @@ fn ensure_config() -> PathBuf {
     let icons_dir = config_dir.join("icons");
     let wofi_dir = config_dir.join("wofi");
 
-    // Создаем структуру папок
     let _ = fs::create_dir_all(&icons_dir);
     let _ = fs::create_dir_all(&wofi_dir);
 
-    // Функция-помощник для записи файла, если его нет
     let write_if_not_exists = |path: PathBuf, data: &[u8]| {
         if !path.exists() {
             let _ = fs::write(path, data);
@@ -59,7 +56,7 @@ fn run_menu(prompt: &str, opts: &[&str], config_path: &PathBuf) -> Option<String
 
     match launcher {
         "wofi" => {
-            cmd.args(["--dmenu", "--allow-images", "--width", "170"]);
+            cmd.args(["--dmenu", "--allow-images", "--width", "200", "--no-cache", "--insensitive"]);
             cmd.arg("--prompt").arg(prompt);
             
             let base = config_path.join("wofi");
@@ -68,8 +65,10 @@ fn run_menu(prompt: &str, opts: &[&str], config_path: &PathBuf) -> Option<String
             if cfg.exists() { cmd.arg("--conf").arg(cfg); }
             if style.exists() { cmd.arg("--style").arg(style); }
         }
-        "rofi" => { cmd.args(["-dmenu", "-p", prompt]); }
-        "dmenu" => { cmd.args(["-p", prompt]); }
+        "rofi" => { 
+            cmd.args(["-dmenu", "-p", prompt, "-sort", "false", "-i"]); 
+        }
+        "dmenu" => { cmd.args(["-p", prompt, "-i"]); }
         _ => unreachable!(),
     }
 
@@ -119,7 +118,6 @@ fn main() {
         return;
     }
 
-    // 1. Инициализируем конфиг и получаем путь
     let config_path = ensure_config();
     let icon_path = config_path.join("icons");
     let home = dirs::home_dir().unwrap_or_else(|| PathBuf::from("."));
@@ -127,8 +125,8 @@ fn main() {
     let main_opts = [
         &format!("img:{}/Area.svg:text:Area", icon_path.display()),
         &format!("img:{}/Monitor.svg:text:Monitor", icon_path.display()),
-        "All",
-        "Cancel",
+        "text:All",
+        "text:Cancel",
     ];
 
     let choice_raw = run_menu("Screenshot", &main_opts, &config_path).unwrap_or_else(|| "Cancel".into());
@@ -170,7 +168,7 @@ fn main() {
         &format!("img:{}/Copy.svg:text:Copy", icon_path.display()),
         &format!("img:{}/Edit.svg:text:Edit", icon_path.display()),
         &format!("img:{}/SavenCopy.svg:text:Save&Copy", icon_path.display()),
-        "Cancel",
+        "text:Cancel",
     ];
 
     let act_raw = run_menu("Action", &actions, &config_path).unwrap_or_else(|| "Cancel".into());
